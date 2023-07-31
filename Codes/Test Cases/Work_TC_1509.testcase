@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<testCase id="8">
+<testCase id="8" registryId="6f32a470-dba8-4758-97e9-d4648025b80f" visibility="Internal">
   <summary/>
   <steps>
     <apiCall apiId="com.provar.plugins.forcedotcom.core.testapis.ApexConnect" name="ApexConnect" testItemId="1" title="Salesforce Connect: DRDprofile (Test)">
@@ -7,8 +7,12 @@
         <argument id="connectionName">
           <value class="value" valueClass="string">Admin</value>
         </argument>
-        <argument id="reuseConnectionName"/>
-        <argument id="resultName">
+        <argument argId="66e36e46-1de7-4df2-a18d-61632296a197" id="reuseConnectionName">
+          <value class="variable">
+            <path element="reuseConnectionName"/>
+          </value>
+        </argument>
+        <argument argId="acfdc19c-eac4-4b07-9ed2-7414bb3eeba8" id="resultName">
           <value class="value" valueClass="string">DRDprofile</value>
         </argument>
         <argument id="resultScope">
@@ -656,9 +660,7 @@
               </arguments>
             </apiCall>
             <apiCall apiId="com.provar.plugins.forcedotcom.core.ui.UiDoAction" name="UiDoAction" testItemId="47" title="Check the Do Not Create Opportunity">
-              <tags>
-                <string>disabled</string>
-              </tags>
+              <tags/>
               <arguments>
                 <argument id="locator">
                   <value class="uiLocator" uri="ui:pageobject:field?field=doNotCreateOpportunity&amp;pageId=pageobjects.LeadDetailPage"/>
@@ -4541,12 +4543,12 @@
       <clauses>
         <clause name="substeps" testItemId="476">
           <steps>
-            <apiCall apiId="com.provar.plugins.forcedotcom.core.testapis.ApexSoqlQuery" name="ApexSoqlQuery" testItemId="477" title="SOQL Query: select Id, AccountId from Opportunity WHERE AccountId = '{AccountRows.Id}' order by Id desc limit 1=&gt;OpportunityRows">
+            <apiCall apiId="com.provar.plugins.forcedotcom.core.testapis.ApexSoqlQuery" name="ApexSoqlQuery" testItemId="477" title="SOQL Query: select Id, AccountId, Account_Internal_Name__c from Opportunity WHERE AccountId = '{AccountRows.Id}' order by Id desc limit 1=&gt;OpportunityRows">
               <arguments>
                 <argument id="soqlQuery">
                   <value class="compound">
                     <parts>
-                      <value valueClass="string">select Id, AccountId from Opportunity WHERE AccountId = '</value>
+                      <value valueClass="string">select Id, AccountId, Account_Internal_Name__c from Opportunity WHERE AccountId = '</value>
                       <variable>
                         <path element="AccountRows"/>
                         <path element="Id"/>
@@ -5390,6 +5392,9 @@
               </arguments>
             </apiCall>
             <apiCall apiId="com.provar.plugins.forcedotcom.core.ui.UiAssert" name="UiAssert" testItemId="647" title="UI Assert">
+              <tags>
+                <string>disabled</string>
+              </tags>
               <arguments>
                 <argument id="resultName">
                   <value class="value" valueClass="string">Values</value>
@@ -5424,6 +5429,9 @@
               </arguments>
             </apiCall>
             <apiCall apiId="com.provar.plugins.bundled.apis.If" name="If" testItemId="605" title="If: {Values.fields.resolvecont.visible}">
+              <tags>
+                <string>disabled</string>
+              </tags>
               <arguments>
                 <argument id="condition">
                   <value class="variable">
@@ -6689,14 +6697,41 @@
         </textType>
       </type>
     </param>
+    <param linkedToUrl="provar:hasvalue:66e36e46-1de7-4df2-a18d-61632296a197" name="reuseConnectionName" passwordVariableAllowed="true" title="Override Connection">
+      <summary>The name of an already opened connect to re-use.</summary>
+      <type>
+        <connectionType>
+          <constraints>
+            <valueConstraint name="variableName">true</valueConstraint>
+            <valueConstraint name="requiredCapabilities">sfSoapConnect</valueConstraint>
+          </constraints>
+        </connectionType>
+      </type>
+    </param>
   </params>
-  <outputParams/>
+  <outputParams>
+    <param name="OpportunityRows" passwordVariableAllowed="true" title="OpportunityRows">
+      <summary>The name under which the returned rows will be stored.</summary>
+      <type>
+        <textType>
+          <constraints>
+            <valueConstraint name="minLength">0</valueConstraint>
+            <valueConstraint name="maxLength">9999</valueConstraint>
+          </constraints>
+        </textType>
+      </type>
+      <sourceValue class="variable">
+        <path element="OpportunityRows"/>
+      </sourceValue>
+    </param>
+  </outputParams>
   <args>
     <argument id="Company">
       <value class="variable">
         <path element="Company"/>
       </value>
     </argument>
+    <argument id="reuseConnectionName"/>
   </args>
   <outputArgs>
     <outputArgument id="OpportunityRowss">
@@ -6704,6 +6739,9 @@
     </outputArgument>
     <outputArgument id="getAccountName">
       <name class="value" valueClass="string">getAccountName</name>
+    </outputArgument>
+    <outputArgument id="OpportunityRows">
+      <name class="value" valueClass="string">OpportunityRows</name>
     </outputArgument>
   </outputArgs>
   <parameterValueSources>
